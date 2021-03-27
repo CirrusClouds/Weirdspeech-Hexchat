@@ -11,9 +11,9 @@ def cirrusify(sequence, word_eol, userdata):
     
     exclusions = ("/say", ".tell")
 
-    """
-    Editing of message
-    """
+    
+    # Editing of message with a lot of conditional junk
+    
     
     repeats = 0
     
@@ -28,17 +28,23 @@ def cirrusify(sequence, word_eol, userdata):
         select_word = random.randint(0, (len(sequence) - 1))
         sequence[select_word] = sequence[select_word][0] + sequence[select_word]
 
-    """
-    Bringing the statement back together
-    """
+
+    # Bringing the statement back together with a foldl, lisp style!
+    
+    
     acc = ""
         
     for i in range(len(sequence)):
         acc = acc + sequence[i] + " "
+
+    # Actually creating and posting the message with context
     
-    hexchat.command("msg #lainchan {0}".format(acc))
+    channel = hexchat.get_info("channel")
+    hexchat.command("msg {0} {1}".format(channel, acc))
                    
     return hexchat.EAT_ALL
 
 
+
+# Intervenes in any kind of action and sends the input to the function above
 hexchat.hook_command("", cirrusify)
